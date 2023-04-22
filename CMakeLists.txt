@@ -12,7 +12,7 @@ project(WebSocketServer LANGUAGES CXX)
 # # 允许GDB调试
 # set(CMAKE_BUILD_TYPE DEBUG)
 
-include_directories(./include)
+include_directories(. ./include)
 
 
 
@@ -23,6 +23,6 @@ aux_source_directory(./src  MAIN_SRC_LIST)
 add_executable(${PROJECT_NAME} ${MAIN_SRC_LIST})
 
 # 这里对于 header only 的库应该不需要添加
-# target_link_libraries(${PROJECT_NAME} ACCEL CAMERA MATERIAL MATH HITABLE TEXTURE)
+target_link_libraries(${PROJECT_NAME} libjsoncpp.so)
 
 
