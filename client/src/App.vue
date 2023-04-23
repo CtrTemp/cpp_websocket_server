@@ -4,6 +4,9 @@
     <button @click="ws_client_close_server">Socket Close</button>
     <button @click="ws_client_fetch_json_str">Socket Get Json</button>
     <button @click="ws_client_send_json_str">Socket Send Json</button>
+    <button @click="ws_client_get_frame">Socket Fetch Frame</button>
+
+    <div>Loop time : {{ store.state.get_time - store.state.request_time }}ms</div>
 
   </div>
 </template>
@@ -22,7 +25,8 @@ const ws_client_send_wrong_message = function () {
     hah: "haah"
   };
   ws.send(JSON.stringify(json_pack));
-  // ws.send(json_pack);
+  let myDate = new Date();
+  store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
 }
 
 // 发送消息停掉后台
@@ -32,6 +36,8 @@ const ws_client_close_server = function () {
     cmd: "close"
   }
   ws.send(JSON.stringify(json_pack));
+  let myDate = new Date();
+  store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
 }
 
 
@@ -42,7 +48,10 @@ const ws_client_fetch_json_str = function () {
     cmd: "get_json"
   }
   ws.send(JSON.stringify(json_pack));
+  let myDate = new Date();
+  store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
 }
+
 
 // 发送 json 到后端
 const ws_client_send_json_str = function () {
@@ -54,12 +63,41 @@ const ws_client_send_json_str = function () {
   }
 
   ws.send(JSON.stringify(json_pack));
+  let myDate = new Date();
+  store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
 }
 
 
+// 发送 json 到后端：获取一帧模拟图像数据
+const ws_client_get_frame = function () {
+  const json_pack = {
+    cmd: "get_frame_pack"
+  }
+
+  ws.send(JSON.stringify(json_pack));
+  let myDate = new Date();
+  store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
+}
+
+
+// setInterval(() => {
+
+//   const json_pack = {
+//     cmd: "get_frame_pack"
+//   }
+
+//   ws.send(JSON.stringify(json_pack));
+//   let myDate = new Date();
+//   store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
+// }, 1000);
+
+
 ws.onmessage = function (e) {
-  const json_data_pack = JSON.parse(e.data);
-  console.log("json_data_pack from server = ", json_data_pack);
+  // const json_data_pack = JSON.parse(e.data);
+  console.log("json_data_pack from server = ", e.data);
+
+  let myDate = new Date();
+  store.state.get_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
 }
 
 </script>

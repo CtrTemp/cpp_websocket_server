@@ -10,8 +10,8 @@
 
 #include <json/json.h>
 
-#define CURRENT_PORT 9002
-// #define CURRENT_PORT 9003
+// #define CURRENT_PORT 9002
+#define CURRENT_PORT 9003
 
 void server_startup();
 void server_send_msg();
@@ -111,6 +111,64 @@ public:
             {
                 m_server.send(it, json_str, sCode);
             }
+        }
+
+        else if (cmd_str == "get_frame_pack")
+        {
+            int width = 200;
+            int height = 100;
+            const int size = width * height * 3;
+            int *frame_buffer_temp = new int[size];
+
+            // read_ppm_file(frame_buffer_temp, width, height);
+
+            clock_t start, end; // 定义clock_t变量
+            start = clock();    // 开始时间
+
+            for (int i = 0; i < width * height * 3; i++)
+            {
+                frame_buffer_temp[i] = 128;
+            }
+            end = clock();
+
+            std::cout << "buffer init time = " << 1000 * double(end - start) / CLOCKS_PER_SEC << "ms" << std::endl;
+
+            // 以下测试 Json Obj 创建
+            Json::FastWriter jsonWrite;
+            Json::Value json_obj;
+
+            // 写入一般数据
+            json_obj["cmd"] = "frame_pack";
+            json_obj["frame_width"] = width;
+            json_obj["frame_height"] = height;
+
+            // 写入数组数据
+            Json::Value arr_obj;
+            for (int i = 0; i < width * height * 3; i++)
+            {
+                arr_obj.append(frame_buffer_temp[i]);
+            }
+            json_obj["arr"] = arr_obj;
+
+            std::string json_str = jsonWrite.write(json_obj);
+
+            // 加入这两句后便不会默认打印发送的消息
+            m_server.clear_access_channels(websocketpp::log::alevel::all);
+            m_server.clear_access_channels(websocketpp::log::alevel::frame_payload);
+
+            // 向所有的 client 端广播信息
+
+            start = clock();    // 开始时间
+            websocketpp::frame::opcode::value sCode = websocketpp::frame::opcode::BINARY;
+            // websocketpp::frame::opcode::value sCode = websocketpp::frame::opcode::TEXT;
+            for (auto it : m_connections)
+            {
+                m_server.send(it, json_str, sCode);
+            }
+            end = clock();
+
+            std::cout << "send json pack time = " << 1000 * double(end - start) / CLOCKS_PER_SEC << "ms" << std::endl;
+
         }
     }
 
