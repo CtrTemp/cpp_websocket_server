@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package hello;
+
+// option cpp_package = "./hello";
+
+// 正确的做法应该是将图片编码成一个字符串文件传给protobuf
+// 该字符串传到客户端再进行解码
+
+message test_pack {
+  string cmd = 1;
+  int32 width = 2;
+  int32 height = 3;
+  repeated int32 buffer = 4;
+}

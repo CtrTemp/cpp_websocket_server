@@ -14,15 +14,46 @@
 
 #include "include/onMessageRouter.h"
 
+// 引入protoc编译好的头文件
+#include "proto/message.pb.h"
+
 void read_ppm_file(int *frame_buffer, uint16_t frame_width, uint16_t frame_height);
 std::vector<std::string> split(std::string str, std::string s);
 
 int main()
 {
-	// 首个线程开启服务器，并进行特定端口的监听
-	std::thread first_thread(server_startup);
 
-	first_thread.join();
+	// // 首个线程开启服务器，并进行特定端口的监听
+	// std::thread first_thread(server_startup);
+
+	// first_thread.join();
+
+	// 测试protoc编译出的文件
+	hello::test_pack msg_pack_temp;
+	msg_pack_temp.set_height(5);
+	msg_pack_temp.set_width(10);
+	msg_pack_temp.set_cmd("aaha");
+	msg_pack_temp.add_buffer(1);
+	msg_pack_temp.set_buffer(0, 1);
+
+	clock_t start, end;
+	start = clock();
+
+	// msg_pack_temp.buffer_size();
+	msg_pack_temp.mutable_buffer();
+
+	for (int i = 0; i < 720; i++)
+	{
+		for (int j = 0; j < 1280; j++)
+		{
+			int index = i * 1280 + j;
+			msg_pack_temp.add_buffer(1);
+			msg_pack_temp.set_buffer(index, 1);
+		}
+	}
+	end = clock();
+
+	std::cout << "send json pack time = " << 1000 * double(end - start) / CLOCKS_PER_SEC << "ms" << std::endl;
 
 	return 0;
 }

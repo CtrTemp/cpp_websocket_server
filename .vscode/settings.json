@@ -73,6 +73,20 @@
         "typeinfo": "cpp",
         "filesystem": "cpp",
         "variant": "cpp",
-        "__nullptr": "cpp"
-    }
+        "__nullptr": "cpp",
+        "*.inc": "cpp"
+    },
+    "protoc": {
+        "path": "/home/ctrtemp/Downloads/Libs/C_CPP/Protobuf/installed/bin/protoc",
+        "options": [
+            "--proto_path=protos/v3",
+            "--proto_path=protos/v2",
+            "--java_out=gen/java"
+        ]
+    },
+    "[proto3]": {
+        "editor.defaultFormatter": "zxh404.vscode-proto3"
+    },
 }
+
+
