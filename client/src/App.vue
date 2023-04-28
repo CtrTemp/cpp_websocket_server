@@ -1,10 +1,10 @@
 <template>
   <div class="root-container">
-    <button @click="ws_client_send_wrong_message">Socket Err Test</button>
     <button @click="ws_client_close_server">Socket Close</button>
-    <button @click="ws_client_fetch_json_str">Socket Get Json</button>
-    <button @click="ws_client_send_json_str">Socket Send Json</button>
-    <button @click="ws_client_get_frame">Socket Fetch Frame</button>
+    <!-- <button @click="ws_client_fetch_json_str">Socket Get Json</button> -->
+    <!-- <button @click="ws_client_send_json_str">Socket Send Json</button> -->
+    <!-- <button @click="ws_client_get_frame">Socket Fetch Frame</button> -->
+    <button @click="ws_request_protobuf_data_pack">Socket Get Protobuf</button>
 
     <div>Loop time : {{ store.state.get_time - store.state.request_time }}ms</div>
 
@@ -15,7 +15,14 @@
 
 import { useStore } from 'vuex';
 
+// import { proto } from "./proto/test_pack"
+
+const proto = require("./proto/test_pack");
+
+console.log("proto = ", proto);
+
 const store = useStore();
+
 
 const ws = store.state.ws;
 
@@ -79,6 +86,16 @@ const ws_client_get_frame = function () {
   store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
 }
 
+const ws_request_protobuf_data_pack = function () {
+  const json_pack = {
+    cmd: "get_protobuf_pack"
+  }
+
+  ws.send(JSON.stringify(json_pack));
+  let myDate = new Date();
+  store.state.request_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();
+}
+
 
 // setInterval(() => {
 
@@ -95,6 +112,7 @@ const ws_client_get_frame = function () {
 ws.onmessage = function (e) {
   // const json_data_pack = JSON.parse(e.data);
   console.log("json_data_pack from server = ", e.data);
+  // 这里好像收到的是一个空的blob
 
   let myDate = new Date();
   store.state.get_time = myDate.getSeconds() * 1000 + myDate.getMilliseconds();

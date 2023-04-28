@@ -74,7 +74,8 @@
         "filesystem": "cpp",
         "variant": "cpp",
         "__nullptr": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "unordered_set": "cpp"
     },
     "protoc": {
         "path": "/home/ctrtemp/Downloads/Libs/C_CPP/Protobuf/installed/bin/protoc",

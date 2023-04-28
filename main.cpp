@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-
+#include <stdlib.h>
 #include <thread>
 
 #include <time.h>
@@ -17,89 +17,14 @@
 // 引入protoc编译好的头文件
 #include "proto/message.pb.h"
 
-void read_ppm_file(int *frame_buffer, uint16_t frame_width, uint16_t frame_height);
-std::vector<std::string> split(std::string str, std::string s);
-
 int main()
 {
 
-	// // 首个线程开启服务器，并进行特定端口的监听
-	// std::thread first_thread(server_startup);
+	// 首个线程开启服务器，并进行特定端口的监听
+	std::thread first_thread(server_startup);
 
-	// first_thread.join();
+	first_thread.join();
 
-	// 测试protoc编译出的文件
-	hello::test_pack msg_pack_temp;
-	msg_pack_temp.set_height(5);
-	msg_pack_temp.set_width(10);
-	msg_pack_temp.set_cmd("aaha");
-	msg_pack_temp.add_buffer(1);
-	msg_pack_temp.set_buffer(0, 1);
-
-	clock_t start, end;
-	start = clock();
-
-	// msg_pack_temp.buffer_size();
-	msg_pack_temp.mutable_buffer();
-
-	for (int i = 0; i < 720; i++)
-	{
-		for (int j = 0; j < 1280; j++)
-		{
-			int index = i * 1280 + j;
-			msg_pack_temp.add_buffer(1);
-			msg_pack_temp.set_buffer(index, 1);
-		}
-	}
-	end = clock();
-
-	std::cout << "send json pack time = " << 1000 * double(end - start) / CLOCKS_PER_SEC << "ms" << std::endl;
 
 	return 0;
-}
-
-void read_ppm_file(int *frame_buffer, uint16_t frame_width, uint16_t frame_height)
-{
-	std::ifstream readFile;
-	readFile.open("../Pic/depth_buffer.ppm", std::ios::in);
-
-	if (!readFile.is_open())
-	{
-		std::cout << "文件打开失败！" << std::endl;
-		return;
-	}
-
-	std::cout << "文件打开成功！" << std::endl;
-	std::cout << "类容如下！" << std::endl;
-	std::string str;
-
-	// 前三行是文件基础信息
-	getline(readFile, str);
-	getline(readFile, str);
-	getline(readFile, str);
-
-	int frame_counter = 0;
-	while (getline(readFile, str))
-	{
-		// std::vector<std::string> parsed_str = split(str, " ");
-		// std::cout << parsed_str[0] << "/" << parsed_str[1] << "/" << parsed_str[2] << "/" << std::endl;
-		// frame_buffer[frame_counter++] = stoi(parsed_str[0]);
-		// frame_buffer[frame_counter++] = stoi(parsed_str[1]);
-		// frame_buffer[frame_counter++] = stoi(parsed_str[2]);
-	}
-
-	std::cout << "done" << std::endl;
-}
-
-std::vector<std::string> split(std::string str, std::string s)
-{
-	boost::regex reg(s.c_str());
-	std::vector<std::string> vec;
-	boost::sregex_token_iterator it(str.begin(), str.end(), reg, -1);
-	boost::sregex_token_iterator end;
-	while (it != end)
-	{
-		vec.push_back(*it++);
-	}
-	return vec;
 }
