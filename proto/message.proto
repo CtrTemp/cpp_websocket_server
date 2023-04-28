@@ -12,4 +12,5 @@ message test_pack {
   int32 width = 2;
   int32 height = 3;
   repeated int32 buffer = 4;
+  string img_url = 5;
 }

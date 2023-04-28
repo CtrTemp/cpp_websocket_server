@@ -22,6 +22,7 @@ constexpr test_pack::test_pack(
   : buffer_()
   , _buffer_cached_byte_size_(0)
   , cmd_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , img_url_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , width_(0)
   , height_(0){}
 struct test_packDefaultTypeInternal {
@@ -49,6 +50,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::hello::test_pack, width_),
   PROTOBUF_FIELD_OFFSET(::hello::test_pack, height_),
   PROTOBUF_FIELD_OFFSET(::hello::test_pack, buffer_),
+  PROTOBUF_FIELD_OFFSET(::hello::test_pack, img_url_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::hello::test_pack)},
@@ -59,13 +61,13 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rmessage.proto\022\005hello\"G\n\ttest_pack\022\013\n\003c"
+  "\n\rmessage.proto\022\005hello\"X\n\ttest_pack\022\013\n\003c"
   "md\030\001 \001(\t\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030\003 \001(\005\022"
-  "\016\n\006buffer\030\004 \003(\005b\006proto3"
+  "\016\n\006buffer\030\004 \003(\005\022\017\n\007img_url\030\005 \001(\tb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_message_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_message_2eproto = {
-  false, false, 103, descriptor_table_protodef_message_2eproto, "message.proto", 
+  false, false, 120, descriptor_table_protodef_message_2eproto, "message.proto", 
   &descriptor_table_message_2eproto_once, nullptr, 0, 1,
   schemas, file_default_instances, TableStruct_message_2eproto::offsets,
   file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto, file_level_service_descriptors_message_2eproto,
@@ -103,6 +105,11 @@ test_pack::test_pack(const test_pack& from)
     cmd_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_cmd(), 
       GetArenaForAllocation());
   }
+  img_url_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_img_url().empty()) {
+    img_url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_img_url(), 
+      GetArenaForAllocation());
+  }
   ::memcpy(&width_, &from.width_,
     static_cast<size_t>(reinterpret_cast<char*>(&height_) -
     reinterpret_cast<char*>(&width_)) + sizeof(height_));
@@ -111,6 +118,7 @@ test_pack::test_pack(const test_pack& from)
 
 void test_pack::SharedCtor() {
 cmd_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+img_url_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&width_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&height_) -
@@ -127,6 +135,7 @@ test_pack::~test_pack() {
 inline void test_pack::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   cmd_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  img_url_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void test_pack::ArenaDtor(void* object) {
@@ -147,6 +156,7 @@ void test_pack::Clear() {
 
   buffer_.Clear();
   cmd_.ClearToEmpty();
+  img_url_.ClearToEmpty();
   ::memset(&width_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&height_) -
       reinterpret_cast<char*>(&width_)) + sizeof(height_));
@@ -192,6 +202,16 @@ const char* test_pack::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32) {
           _internal_add_buffer(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string img_url = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          auto str = _internal_mutable_img_url();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "hello.test_pack.img_url"));
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -256,6 +276,16 @@ failure:
     }
   }
 
+  // string img_url = 5;
+  if (!this->_internal_img_url().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_img_url().data(), static_cast<int>(this->_internal_img_url().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "hello.test_pack.img_url");
+    target = stream->WriteStringMaybeAliased(
+        5, this->_internal_img_url(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -294,6 +324,13 @@ size_t test_pack::ByteSizeLong() const {
         this->_internal_cmd());
   }
 
+  // string img_url = 5;
+  if (!this->_internal_img_url().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_img_url());
+  }
+
   // int32 width = 2;
   if (this->_internal_width() != 0) {
     total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_width());
@@ -330,6 +367,9 @@ void test_pack::MergeFrom(const test_pack& from) {
   if (!from._internal_cmd().empty()) {
     _internal_set_cmd(from._internal_cmd());
   }
+  if (!from._internal_img_url().empty()) {
+    _internal_set_img_url(from._internal_img_url());
+  }
   if (from._internal_width() != 0) {
     _internal_set_width(from._internal_width());
   }
@@ -360,6 +400,11 @@ void test_pack::InternalSwap(test_pack* other) {
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &cmd_, lhs_arena,
       &other->cmd_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &img_url_, lhs_arena,
+      &other->img_url_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(test_pack, height_)

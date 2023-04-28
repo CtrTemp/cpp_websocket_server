@@ -186,6 +186,7 @@ class test_pack final :
   enum : int {
     kBufferFieldNumber = 4,
     kCmdFieldNumber = 1,
+    kImgUrlFieldNumber = 5,
     kWidthFieldNumber = 2,
     kHeightFieldNumber = 3,
   };
@@ -225,6 +226,20 @@ class test_pack final :
   std::string* _internal_mutable_cmd();
   public:
 
+  // string img_url = 5;
+  void clear_img_url();
+  const std::string& img_url() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_img_url(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_img_url();
+  PROTOBUF_MUST_USE_RESULT std::string* release_img_url();
+  void set_allocated_img_url(std::string* img_url);
+  private:
+  const std::string& _internal_img_url() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_img_url(const std::string& value);
+  std::string* _internal_mutable_img_url();
+  public:
+
   // int32 width = 2;
   void clear_width();
   ::PROTOBUF_NAMESPACE_ID::int32 width() const;
@@ -253,6 +268,7 @@ class test_pack final :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > buffer_;
   mutable std::atomic<int> _buffer_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cmd_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr img_url_;
   ::PROTOBUF_NAMESPACE_ID::int32 width_;
   ::PROTOBUF_NAMESPACE_ID::int32 height_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -400,6 +416,52 @@ inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
 test_pack::mutable_buffer() {
   // @@protoc_insertion_point(field_mutable_list:hello.test_pack.buffer)
   return _internal_mutable_buffer();
+}
+
+// string img_url = 5;
+inline void test_pack::clear_img_url() {
+  img_url_.ClearToEmpty();
+}
+inline const std::string& test_pack::img_url() const {
+  // @@protoc_insertion_point(field_get:hello.test_pack.img_url)
+  return _internal_img_url();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void test_pack::set_img_url(ArgT0&& arg0, ArgT... args) {
+ 
+ img_url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:hello.test_pack.img_url)
+}
+inline std::string* test_pack::mutable_img_url() {
+  std::string* _s = _internal_mutable_img_url();
+  // @@protoc_insertion_point(field_mutable:hello.test_pack.img_url)
+  return _s;
+}
+inline const std::string& test_pack::_internal_img_url() const {
+  return img_url_.Get();
+}
+inline void test_pack::_internal_set_img_url(const std::string& value) {
+  
+  img_url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* test_pack::_internal_mutable_img_url() {
+  
+  return img_url_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* test_pack::release_img_url() {
+  // @@protoc_insertion_point(field_release:hello.test_pack.img_url)
+  return img_url_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void test_pack::set_allocated_img_url(std::string* img_url) {
+  if (img_url != nullptr) {
+    
+  } else {
+    
+  }
+  img_url_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), img_url,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:hello.test_pack.img_url)
 }
 
 #ifdef __GNUC__

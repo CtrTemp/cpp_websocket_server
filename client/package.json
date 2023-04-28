@@ -10,8 +10,12 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "core-js": "^3.8.3",
+    "google-protobuf": "^3.21.2",
     "jspb": "^0.0.1",
     "nanoid": "^4.0.2",
+    "pbjs": "^0.0.14",
+    "protobufjs": "^7.2.3",
+    "request": "^2.88.2",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"

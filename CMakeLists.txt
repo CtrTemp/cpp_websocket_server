@@ -26,6 +26,25 @@ message(STATUS ${MAIN_SRC_LIST})
 add_executable(${PROJECT_NAME} ${MAIN_SRC_LIST})
 
 # 这里对于 header only 的库应该不需要添加
-target_link_libraries(${PROJECT_NAME} libjsoncpp.so libprotobuf.a pthread)
+target_link_libraries(${PROJECT_NAME} libjsoncpp.so libprotobuf.a pthread base64
+
+
+opencv_calib3d
+opencv_core
+opencv_dnn
+opencv_features2d
+opencv_flann
+opencv_gapi
+opencv_highgui
+opencv_imgcodecs
+opencv_imgproc
+opencv_ml
+opencv_objdetect
+opencv_photo
+opencv_stitching
+opencv_videoio
+opencv_video
+
+)
 
 
